@@ -1,0 +1,99 @@
+from fpdf import FPDF
+
+class BrochurePDF(FPDF):
+    def footer(self):
+        self.set_y(-15)
+        self.set_font("Helvetica", "I", 8)
+        self.set_text_color(128)
+        self.cell(0, 10, "Mistillano Logistics SAC | Lima - Perú", align="C")
+
+    def add_title_page(self):
+        self.add_page()
+        self.set_font("Helvetica", "B", 20)
+        self.set_text_color(0, 70, 130)
+        self.ln(40)
+        self.cell(0, 10, "Mistillano Logistics SAC", ln=True, align="C")
+
+        self.set_font("Helvetica", "I", 14)
+        self.set_text_color(0)
+        self.cell(0, 10, '"Movemos tu carga con seguridad, rapidez y confianza."', ln=True, align="C")
+
+        self.ln(15)
+        self.set_font("Helvetica", "", 12)
+        self.cell(0, 10, "Cobertura: Lima y Provincias", ln=True, align="C")
+        self.cell(0, 10, "Contacto: +51 962 227 131 | mistillanologistics@gmail.com", ln=True, align="C")
+
+        self.ln(20)
+        # Imagen referencial de camión
+        # self.image("camion.jpg", x=30, w=150)  # Descomenta si tienes imagen
+
+    def add_section_page(self, title, content, image_path=None):
+        self.add_page()
+        self.set_font("Helvetica", "B", 16)
+        self.set_text_color(0, 70, 130)
+        self.cell(0, 10, title, ln=True)
+
+        self.ln(5)
+        self.set_font("Helvetica", "", 12)
+        self.set_text_color(0)
+        self.multi_cell(0, 8, content)
+
+        if image_path:
+            self.ln(10)
+            self.image(image_path, x=30, w=150)
+
+    def add_contact_page(self):
+        self.add_page()
+        self.set_font("Helvetica", "B", 16)
+        self.set_text_color(0, 70, 130)
+        self.cell(0, 10, "Contáctanos", ln=True)
+
+        self.ln(10)
+        self.set_font("Helvetica", "", 12)
+        self.set_text_color(0)
+        self.multi_cell(0, 8, """Mistillano Logistics SAC
+📍 Lima, Perú
+📞 +51 962 227 131
+📧 mistillanologistics@gmail.com""")
+
+        self.ln(15)
+        # self.image("iconos_contacto.png", x=60, w=90)  # íconos referenciales (opcional)
+
+# Crear brochure
+pdf = BrochurePDF()
+pdf.set_auto_page_break(auto=True, margin=15)
+
+# Página 1 - Portada
+pdf.add_title_page()
+
+# Página 2 - Sobre Nosotros
+pdf.add_section_page("¿Quiénes somos?", """Mistillano Logistics SAC es una empresa peruana especializada en servicios de transporte y estibaje, comprometida con brindar soluciones eficientes y seguras para el manejo de carga en Lima y provincias.
+
+Nuestro equipo está conformado por personal altamente capacitado y con amplia experiencia, lo que nos permite ofrecer una atención personalizada y resultados de calidad.""")
+
+# Página 3 - Nuestros Servicios
+pdf.add_section_page("Nuestros Servicios", """✅ Transporte de carga
+
+- Envíos locales y a provincias
+- Puntualidad y seguimiento constante
+- Unidades en óptimas condiciones
+
+✅ Servicio de estibaje
+
+- Personal entrenado
+- Cuidado profesional de la carga
+- Optimización del tiempo y seguridad""")
+
+# Página 4 - ¿Por qué elegirnos?
+pdf.add_section_page("¿Por qué elegirnos?", """🔒 Seguridad garantizada
+📍 Cobertura amplia en Lima y provincias
+⏱ Rapidez en entregas y maniobras
+👷 Equipo profesional con experiencia
+🤝 Atención personalizada al cliente""")
+
+# Página 5 - Contacto
+pdf.add_contact_page()
+
+# Guardar PDF
+pdf.output("Mistillano_Logistics_Brochure.pdf")
+   
